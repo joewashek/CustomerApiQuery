@@ -34,7 +34,7 @@ namespace CustomerApiQuery
             var host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
-                    services.AddTransient<ICustomerService, IntacctSdkCustomerService>();
+                    services.AddTransient<ICustomerService, RawXmlCustomerService>();
                     services.AddTransient<IExportService, CsvExportService>();
                 })
                 .Build();
@@ -44,12 +44,14 @@ namespace CustomerApiQuery
             var config = host.Services.GetRequiredService<IConfiguration>();
 
             var exportPath = config?.GetValue<string>(EXPORT_APP_KEY) ?? "";
-                
+
+            Console.WriteLine($"Querying Intacct...");
             var customers = await customerService.GetCustomersAsync(customerCount);
 
+            Console.WriteLine($"Exporting to CSV...");
             await exportService.ExportCustomersAsync(customers, exportPath);
 
-            
+            Console.WriteLine($"Done.");
         }
 
     }

@@ -364,3 +364,5 @@ FodyWeavers.xsd
 
 # Intaact
 /CustomerApiQuery/credentials.ini
+/CustomerApiQuery/cust_resp.xml
+/CustomerApiQuery/session_resp.xml
